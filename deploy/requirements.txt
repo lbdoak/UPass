@@ -1,2 +1,5 @@
-pandas==2.2.3
+psycopg2-binary==2.9.10
 psycopg2==2.9.10
+pyperclip==1.9.0
+crypto==1.4.1
+bloomfilter-py==1.1.0
