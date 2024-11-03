@@ -1,5 +1,5 @@
 import pyperclip
-from manager import connect, store_pass, del_pass, find_user, find_pass
+from manager import connect, store_pass, del_pass, find_user, find_pass, find_all, empty
 from encryption import gen_password
 import os
 
@@ -10,6 +10,8 @@ def menu():
     print('3. Delete an entry')
     print('4. Find a password for a site or app')
     print('5. Find all sites and apps connected to a user or email')
+    print('6. Display all account records')
+    print('!. Reset PassMan to factory default')
     print('q. Exit')
     print('-'*30)
     return input(': ')
@@ -24,6 +26,7 @@ def create():
     data[4] = input('[OPTIONAL] Enter a site url, or press ENTER to continue: ')
     clear()
     store_pass(data[3], data[2], data[1], data[4], data[0], connect())
+    print('')
 
 def generate():
     print(('-'*11) + 'GENERATE' + ('-' *11))
@@ -32,11 +35,10 @@ def generate():
     password = gen_password(len)
     pyperclip.copy(password)
     clear()
+    print(('-'*11) + 'GENERATE' + ('-' *11))
     print('Your password has been copied to your clipboard! Your password is:\n')
-    print('-'*30)
     print('')
     print(password)
-    print('')
     print('-'*30)
     print('')
 
@@ -46,6 +48,7 @@ def remove_entry():
     user = input('Enter the user/email for this app/site: ')
     clear()
     del_pass(user, app, connect())
+    print('')
 
 def search_pass():
     print(('-'*10) + 'PSWDSEARCH' + ('-' *10))
@@ -62,6 +65,16 @@ def search_user():
     print(('-'*10) + 'USERSEARCH' + ('-' *10))
     print('Finding matches...\n')
     find_user(user, connect())
+
+def display():
+    print(('-'*10) + 'DISPLAYALL' + ('-' *10))
+    find_all(connect())
+
+def reset():
+    print(('-'*12) + 'RESET?' + ('-'*12))
+    text = input('Are you sure you want to reset? Please type CONFIRM.\n')
+    if text == 'CONFIRM':
+        empty(connect())
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
