@@ -1,0 +1,22 @@
+services:
+  db:
+    image: sap-db
+    restart: always
+    build:
+      context: ../
+      dockerfile: deploy/Dockerfile
+    environment:
+      POSTGRES_USER: meli
+      POSTGRES_PASSWORD: metralleta
+      POSTGRES_DB: sap
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+
+networks:
+  deploy_default:
+    driver: bridge
